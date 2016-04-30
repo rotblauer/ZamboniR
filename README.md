@@ -1,6 +1,4 @@
 # NHL scritchy scratchy
-RotBlauer LLC  
-`r format(Sys.Date())`  
 Going to look at some things using the nhl data ala 
 
 Load up dat core data and setup
@@ -62,7 +60,8 @@ ggplot(grand.data, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d
 And just the goals
 
 ```r
-ggplot(grand.data[grand.data$etype %in% "GOAL",], aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+newDat =grand.data[ which(grand.data$etype=='GOAL'), ]
+ggplot(newDat, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
 ```
 
 ![](README_files/figure-html/goals-1.png)<!-- -->
@@ -70,15 +69,54 @@ ggplot(grand.data[grand.data$etype %in% "GOAL",], aes(x = xcoord, y = ycoord)) +
 And just the shots
 
 ```r
-ggplot(grand.data[grand.data$etype %in% "SHOT",], aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+newDat =grand.data[ which(grand.data$etype=='SHOT'), ]
+ggplot(newDat, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
 ```
 
 ![](README_files/figure-html/shots-1.png)<!-- -->
 
+The penalties
+
+```r
+newDat =grand.data[ which(grand.data$etype=='PENL'), ]
+ggplot(newDat, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+```
+
+![](README_files/figure-html/pen-1.png)<!-- -->
+
+And short handed/pp shots
+
+```r
+newDat =grand.data[ which(grand.data$etype=='SHOT' & grand.data$away.skaters != grand.data$home.skaters), ]
+ggplot(newDat, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+```
+
+![](README_files/figure-html/sshots-1.png)<!-- -->
+
+And short handed/pp goals
+
+```r
+newDat =grand.data[ which(grand.data$etype=='GOAL' & grand.data$away.skaters != grand.data$home.skaters), ]
+ggplot(newDat, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+```
+
+![](README_files/figure-html/sgoal-1.png)<!-- -->
+
 And our favorite, hits!
 
 ```r
-ggplot(grand.data[grand.data$etype %in% "HIT",], aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+newDat =grand.data[ which(grand.data$etype=='HIT'), ]
+ggplot(newDat, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
 ```
 
 ![](README_files/figure-html/hits-1.png)<!-- -->
+
+And the types of shots
+
+```r
+newDat =grand.data[ which(grand.data$etype=='SHOT'), ]
+ggplot(newDat, aes(x = xcoord, y = ycoord, color=as.factor(type))) +  geom_point() +theme(legend.position="bottom",legend.title=element_blank()) 
+```
+
+![](README_files/figure-html/shotst-1.png)<!-- -->
+
