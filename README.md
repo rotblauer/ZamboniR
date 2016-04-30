@@ -57,7 +57,7 @@ Look at density of events
 ggplot(grand.data, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
 ```
 
-![](README_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
+![](README_files/figure-html/events-1.png)<!-- -->
 
 And just the goals
 
@@ -65,7 +65,7 @@ And just the goals
 ggplot(grand.data[grand.data$etype %in% "GOAL",], aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
 ```
 
-![](README_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+![](README_files/figure-html/goals-1.png)<!-- -->
 
 And just the shots
 
@@ -73,7 +73,7 @@ And just the shots
 ggplot(grand.data[grand.data$etype %in% "SHOT",], aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
 ```
 
-![](README_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![](README_files/figure-html/shots-1.png)<!-- -->
 
 And our favorite, hits!
 
@@ -81,4 +81,4 @@ And our favorite, hits!
 ggplot(grand.data[grand.data$etype %in% "HIT",], aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
 ```
 
-![](README_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](README_files/figure-html/hits-1.png)<!-- -->

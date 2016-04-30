@@ -44,21 +44,21 @@ plot(grand.data$xcoord,grand.data$ycoord)
 It's a rink!
 
 Look at density of events
-```{r,message=FALSE,warning=F}
+```{r events,message=FALSE,warning=F}
 ggplot(grand.data, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
 ```
 
 And just the goals
-```{r,message=FALSE,warning=F}
+```{r goals,message=FALSE,warning=F}
 ggplot(grand.data[grand.data$etype %in% "GOAL",], aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
 ```
 
 And just the shots
-```{r,message=FALSE,warning=F}
+```{r shots,message=FALSE,warning=F}
 ggplot(grand.data[grand.data$etype %in% "SHOT",], aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
 ```
 
 And our favorite, hits!
-```{r,message=FALSE,warning=F}
+```{r hits,message=FALSE,warning=F}
 ggplot(grand.data[grand.data$etype %in% "HIT",], aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
 ```
