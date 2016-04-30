@@ -1,0 +1,32 @@
+---
+title: "NHL scritchy scratchy"
+output: html_document
+---
+Going to look at some things using the nhl data ala 
+
+Load up dat core data
+```{r}
+library(ggplot2)
+load("source-data/nhlscrapr-core.RData")
+
+```
+
+Checkin number of unique players by positions, for example:
+
+```{r}
+ theme_set(theme_bw(24))
+ c <- ggplot(subset(roster.unique,pos!=''), aes(x=pos))
+ c + geom_bar() +xlab("Player Position")
+```
+
+
+Lets load up 2014 - 2015
+```{r}
+load('source-data//nhlscrapr-20142015.RData')
+
+```
+Check out event types
+```{r}
+table(grand.data$etype)
+
+```
