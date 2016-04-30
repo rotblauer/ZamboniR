@@ -5,7 +5,7 @@ output: html_document
 Going to look at some things using the nhl data ala 
 
 Load up dat core data
-```{r}
+```{r load}
 library(ggplot2)
 load("source-data/nhlscrapr-core.RData")
 
@@ -13,7 +13,7 @@ load("source-data/nhlscrapr-core.RData")
 
 Checkin number of unique players by positions, for example:
 
-```{r}
+```{r numPos}
  theme_set(theme_bw(24))
  c <- ggplot(subset(roster.unique,pos!=''), aes(x=pos))
  c + geom_bar() +xlab("Player Position")
@@ -21,12 +21,31 @@ Checkin number of unique players by positions, for example:
 
 
 Lets load up 2014 - 2015
-```{r}
+```{r sauce}
 load('source-data//nhlscrapr-20142015.RData')
 
 ```
 Check out event types
-```{r}
+```{r event}
 table(grand.data$etype)
 
 ```
+
+Neat events, plot time
+```{r p1}
+plot(grand.data$xcoord,grand.data$ycoord)
+
+```
+It's a rink!
+
+Look at density of events
+```{r pd ,message=FALSE,warning=F}
+ggplot(grand.data, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+```
+
+And just the goals
+```{r pdg ,message=FALSE,warning=F}
+ggplot(grand.data[grand.data$etype %in% "GOAL",], aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+```
+
+
