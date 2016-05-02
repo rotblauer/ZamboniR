@@ -14,7 +14,7 @@ Load up dat core data and setup
 
 ```r
 library(ggplot2)
-theme_set(theme_bw(24))
+theme_set(theme_bw(6))
 load("source-data/nhlscrapr-core.RData")
 ```
 
@@ -128,4 +128,42 @@ ggplot(newDat, aes(x = xcoord, y = ycoord, color=as.factor(type))) +  geom_point
 ```
 
 ![](README_files/figure-html/shotst-1.png)<!-- -->
+
+
+Now, wrist shot distances
+
+```r
+newDat =grand.data[ which(grand.data$etype=='SHOT' & grand.data$type=='Wrist'), ]
+ggplot(newDat, aes(x=distance)) + geom_histogram(binwidth=1)
+```
+
+![](README_files/figure-html/shotdist-1.png)<!-- -->
+
+Compared to the distance of wrist shot goals
+
+```r
+newDat =grand.data[ which(grand.data$etype=='GOAL' & grand.data$type=='Wrist'), ]
+ggplot(newDat, aes(x=distance)) + geom_histogram(binwidth=1)
+```
+
+![](README_files/figure-html/goalDist-1.png)<!-- -->
+
+Slappers
+
+```r
+newDat =grand.data[ which(grand.data$etype=='SHOT' & grand.data$type=='Slap'), ]
+ggplot(newDat, aes(x=distance)) + geom_histogram(binwidth=1)
+```
+
+![](README_files/figure-html/shotSlap-1.png)<!-- -->
+
+Slapper goals
+
+```r
+newDat =grand.data[ which(grand.data$etype=='GOAL' & grand.data$type=='Slap'), ]
+ggplot(newDat, aes(x=distance)) + geom_histogram(binwidth=1)
+```
+
+![](README_files/figure-html/goalSlap-1.png)<!-- -->
+
 
