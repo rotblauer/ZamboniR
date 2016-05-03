@@ -9,6 +9,7 @@ Going to look at some things using the nhl data ala <a href="https://cran.r-proj
 If it's the first time ever...
 ```{r eval=FALSE}
 install.packages("nhlscrapr")
+install.packages("ggplot2)")
 library(nhlscrapr)
 #compile.all.games() takes a few hours 
 compile.all.games()
@@ -17,7 +18,6 @@ compile.all.games()
 Load up dat core data and setup
 ```{r load}
 library(ggplot2)
-theme_set(theme_bw(24))
 load("source-data/nhlscrapr-core.RData")
 
 ```
@@ -95,4 +95,30 @@ And the types of shots
 newDat =grand.data[ which(grand.data$etype=='SHOT'), ]
 ggplot(newDat, aes(x = xcoord, y = ycoord, color=as.factor(type))) +  geom_point() +theme(legend.position="bottom",legend.title=element_blank()) 
 ```
+
+
+Now, wrist shot distances
+```{r shotdist,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='SHOT' & grand.data$type=='Wrist'), ]
+ggplot(newDat, aes(x=distance)) + geom_histogram(binwidth=1)
+```
+
+Compared to the distance of wrist shot goals
+```{r goalDist,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='GOAL' & grand.data$type=='Wrist'), ]
+ggplot(newDat, aes(x=distance)) + geom_histogram(binwidth=1)
+```
+
+Slappers
+```{r shotSlap,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='SHOT' & grand.data$type=='Slap'), ]
+ggplot(newDat, aes(x=distance)) + geom_histogram(binwidth=1)
+```
+
+Slapper goals
+```{r goalSlap,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='GOAL' & grand.data$type=='Slap'), ]
+ggplot(newDat, aes(x=distance)) + geom_histogram(binwidth=1)
+```
+
 

@@ -5,6 +5,7 @@ If it's the first time ever...
 
 ```r
 install.packages("nhlscrapr")
+install.packages("ggplot2)")
 library(nhlscrapr)
 #compile.all.games() takes a few hours 
 compile.all.games()
@@ -14,7 +15,6 @@ Load up dat core data and setup
 
 ```r
 library(ggplot2)
-theme_set(theme_bw(6))
 load("source-data/nhlscrapr-core.RData")
 ```
 
