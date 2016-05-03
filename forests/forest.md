@@ -1,16 +1,12 @@
----
-title: "RandomForestNHL"
-author: "RotBlauer LLC"
-date: "May 2, 2016"
-output:
-  html_document:
-    keep_md: yes
----
+# RandomForestNHL
+RotBlauer LLC  
+May 2, 2016  
 
 See what random forests do with nhl data ala <a href="https://cran.r-project.org/web/packages/nhlscrapr/index.html">nhlscrapr</a> 
 
 If it's the first time ever...
-```{r eval=FALSE}
+
+```r
 install.packages("nhlscrapr")
 install.packages("ggplot2")
 install.packages("randomForest")
@@ -22,21 +18,34 @@ compile.all.games()
 
 
 Start with the core data
-```{r load}
+
+```r
 library(ggplot2)
  theme_set(theme_bw(24))
 load("../source-data/nhlscrapr-core.RData")
-
 ```
 
 
 Check the game scores
-```{r table,,warning=F}
+
+```r
 #convert to numeric before plots
 games$homescore <- as.numeric(games$homescore)
 games$awayscore <- as.numeric(games$awayscore)
 ggplot(games, aes(x=awayscore)) + geom_histogram(binwidth=1)
+```
+
+![](forest_files/figure-html/table,-1.png)<!-- -->
+
+```r
 ggplot(games, aes(x=homescore)) + geom_histogram(binwidth=1)
+```
+
+![](forest_files/figure-html/table,-2.png)<!-- -->
+
+```r
 ggplot(games, aes(x=homescore-awayscore)) + geom_histogram(binwidth=1)
 ```
+
+![](forest_files/figure-html/table,-3.png)<!-- -->
 
