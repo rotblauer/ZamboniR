@@ -52,14 +52,22 @@ ggplot(games, aes(x=homescore-awayscore)) + geom_histogram(binwidth=1)
 We will root for the home team
 
 ```r
-games$homesW <- games$homescore > games$awayscore
-#root for the home team off the bat 
-table(games$homesW)
+#lets go forest
+library("randomForest")
+
+forestDat = games[ which(games$homescore != 'NA' & games$awayscore != 'NA'), ]
+forestDat$homesW = forestDat$homescore > forestDat$awayscore
+#home team off the bat 
+table(forestDat$homesW)
 ```
 
 ```
 ## 
 ## FALSE  TRUE 
 ##  7101  8032
+```
+
+```r
+#rfw <- randomForest(homesW ~ awayscore, data=forestDat, importance=TRUE,proximity=TRUE)
 ```
 
