@@ -21,7 +21,7 @@ Start with the core data
 
 ```r
 library(ggplot2)
- theme_set(theme_bw(24))
+theme_set(theme_bw(24))
 load("../source-data/nhlscrapr-core.RData")
 ```
 
@@ -35,17 +35,31 @@ games$awayscore <- as.numeric(games$awayscore)
 ggplot(games, aes(x=awayscore)) + geom_histogram(binwidth=1)
 ```
 
-![](forest_files/figure-html/table,-1.png)<!-- -->
+![](forest_files/figure-html/score-1.png)<!-- -->
 
 ```r
 ggplot(games, aes(x=homescore)) + geom_histogram(binwidth=1)
 ```
 
-![](forest_files/figure-html/table,-2.png)<!-- -->
+![](forest_files/figure-html/score-2.png)<!-- -->
 
 ```r
 ggplot(games, aes(x=homescore-awayscore)) + geom_histogram(binwidth=1)
 ```
 
-![](forest_files/figure-html/table,-3.png)<!-- -->
+![](forest_files/figure-html/score-3.png)<!-- -->
+
+We will root for the home team
+
+```r
+games$homesW <- games$homescore > games$awayscore
+#root for the home team off the bat 
+table(games$homesW)
+```
+
+```
+## 
+## FALSE  TRUE 
+##  7101  8032
+```
 

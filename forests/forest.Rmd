@@ -3,8 +3,8 @@ title: "RandomForestNHL"
 author: "RotBlauer LLC"
 date: "May 2, 2016"
 output:
-  html_document:
-    keep_md: yes
+html_document:
+keep_md: yes
 ---
 
 See what random forests do with nhl data ala <a href="https://cran.r-project.org/web/packages/nhlscrapr/index.html">nhlscrapr</a> 
@@ -24,19 +24,38 @@ compile.all.games()
 Start with the core data
 ```{r load}
 library(ggplot2)
- theme_set(theme_bw(24))
+theme_set(theme_bw(24))
 load("../source-data/nhlscrapr-core.RData")
 
 ```
 
 
 Check the game scores
-```{r table,,warning=F}
+```{r score,warning=F}
 #convert to numeric before plots
 games$homescore <- as.numeric(games$homescore)
 games$awayscore <- as.numeric(games$awayscore)
 ggplot(games, aes(x=awayscore)) + geom_histogram(binwidth=1)
 ggplot(games, aes(x=homescore)) + geom_histogram(binwidth=1)
 ggplot(games, aes(x=homescore-awayscore)) + geom_histogram(binwidth=1)
+```
+
+We will root for the home team
+```{r win,warning=F}
+#root for the home team off the bat 
+table(games$homesW)
+
+```
+
+We will root for the home team
+```{r forest,warning=F}
+#lets go forest
+library("randomForest")
+
+forestDat = games[ which(games$homescore != 'NA' & games$awayscore != 'NA'), ]
+forestDat$homesW = as.factor(forestDat$homescore > forestDat$awayscore)
+
+rfw <- randomForest(homesW ~ awayscore, data=forestDat, importance=TRUE,proximity=TRUE)
+
 ```
 
