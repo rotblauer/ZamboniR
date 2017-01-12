@@ -1,0 +1,124 @@
+---
+title: "NHL scritchy scratchy"
+output:
+  html_document:
+    keep_md: true
+---
+Going to look at some things using the nhl data ala <a href="https://cran.r-project.org/web/packages/nhlscrapr/index.html">nhlscrapr</a> 
+
+If it's the first time ever...
+```{r eval=FALSE}
+install.packages("nhlscrapr")
+install.packages("ggplot2)")
+library(nhlscrapr)
+#compile.all.games() takes a few hours 
+compile.all.games()
+#or you could git http://goggable.areteh.co:3000/RotBlauer/ZamboniR.git
+```
+Load up dat core data and setup
+```{r load}
+library(ggplot2)
+load("source-data/nhlscrapr-core.RData")
+
+```
+
+Checkin number of unique players by positions, for example:
+
+```{r numPos}
+ theme_set(theme_bw(24))
+ c <- ggplot(subset(roster.unique,pos!=''), aes(x=pos))
+ c + geom_bar() +xlab("Player Position")
+```
+
+
+Lets load up 2014 - 2015
+```{r sauce}
+load('source-data//nhlscrapr-20142015.RData')
+
+```
+Check out event types
+```{r event}
+table(grand.data$etype)
+
+```
+
+Neat events, plot time
+```{r p1}
+plot(grand.data$xcoord,grand.data$ycoord)
+
+```
+It's a rink!
+
+Look at density of events
+```{r events,message=FALSE,warning=F}
+ggplot(grand.data, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+```
+
+And just the goals
+```{r goals,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='GOAL'), ]
+ggplot(newDat, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+```
+
+And just the shots
+```{r shots,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='SHOT'), ]
+ggplot(newDat, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+```
+
+The penalties
+```{r pen,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='PENL'), ]
+ggplot(newDat, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+```
+
+And short handed/pp shots
+```{r sshots,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='SHOT' & grand.data$away.skaters != grand.data$home.skaters), ]
+ggplot(newDat, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+```
+
+And short handed/pp goals
+```{r sgoal,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='GOAL' & grand.data$away.skaters != grand.data$home.skaters), ]
+ggplot(newDat, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+```
+
+And our favorite, hits!
+```{r hits,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='HIT'), ]
+ggplot(newDat, aes(x = xcoord, y = ycoord)) +  geom_point() + geom_density2d()
+```
+
+And the types of shots
+```{r shotst,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='SHOT'), ]
+ggplot(newDat, aes(x = xcoord, y = ycoord, color=as.factor(type))) +  geom_point() +theme(legend.position="bottom",legend.title=element_blank()) 
+```
+
+
+Now, wrist shot distances
+```{r shotdist,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='SHOT' & grand.data$type=='Wrist'), ]
+ggplot(newDat, aes(x=distance)) + geom_histogram(binwidth=1)
+```
+
+Compared to the distance of wrist shot goals
+```{r goalDist,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='GOAL' & grand.data$type=='Wrist'), ]
+ggplot(newDat, aes(x=distance)) + geom_histogram(binwidth=1)
+```
+
+Slappers
+```{r shotSlap,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='SHOT' & grand.data$type=='Slap'), ]
+ggplot(newDat, aes(x=distance)) + geom_histogram(binwidth=1)
+```
+
+Slapper goals
+```{r goalSlap,message=FALSE,warning=F}
+newDat =grand.data[ which(grand.data$etype=='GOAL' & grand.data$type=='Slap'), ]
+ggplot(newDat, aes(x=distance)) + geom_histogram(binwidth=1)
+```
+
+
